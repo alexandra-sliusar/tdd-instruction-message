@@ -13,4 +13,11 @@ public class InstructionMessageParserTest {
 
         testedObject.parseMessage(nullString);
     }
+
+    @Test(expected = MessageParseException.class)
+    public void shouldThrowExceptionWhenStringIsEmpty() {
+        String emptyString = "";
+
+        testedObject.parseMessage(emptyString);
+    }
 }
