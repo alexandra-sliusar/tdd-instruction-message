@@ -2,50 +2,39 @@ package ua.training.model;
 
 import java.time.Instant;
 
-public class InstructionMessage {
-    private InstructionType instructionType;
-    private String productCode;
-    private Integer quantity;
-    private Integer uom;
-    private Instant timestamp;
+public final class InstructionMessage {
+    private final InstructionType instructionType;
+    private final String productCode;
+    private final Integer quantity;
+    private final Integer uom;
+    private final Instant timestamp;
+
+    public InstructionMessage(InstructionType instructionType, String productCode,
+                               Integer quantity, Integer uom, Instant timestamp) {
+        this.instructionType = instructionType;
+        this.productCode = productCode;
+        this.quantity = quantity;
+        this.uom = uom;
+        this.timestamp = timestamp;
+    }
 
     public InstructionType getInstructionType() {
         return instructionType;
-    }
-
-    public void setInstructionType(InstructionType instructionType) {
-        this.instructionType = instructionType;
     }
 
     public String getProductCode() {
         return productCode;
     }
 
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
-
     public Integer getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
     }
 
     public Integer getUom() {
         return uom;
     }
 
-    public void setUom(Integer uom) {
-        this.uom = uom;
-    }
-
     public Instant getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(Instant timestamp) {
-        this.timestamp = timestamp;
     }
 }

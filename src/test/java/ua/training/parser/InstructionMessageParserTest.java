@@ -31,8 +31,7 @@ public class InstructionMessageParserTest {
     @Test
     public void shouldSetInstructionTypeWhenMessageIsValid() {
         String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
-        InstructionMessage expectedMessage = new InstructionMessage();
-        expectedMessage.setInstructionType(InstructionType.A);
+        InstructionMessage expectedMessage = new InstructionMessage(InstructionType.A, null, null, null, null);
 
         InstructionMessage actualMessage = testedObject.parseMessage(messageString);
 
@@ -42,8 +41,7 @@ public class InstructionMessageParserTest {
     @Test
     public void shouldSetProductCodeWhenMessageIsValid() {
         String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
-        InstructionMessage expectedMessage = new InstructionMessage();
-        expectedMessage.setProductCode("AA11");
+        InstructionMessage expectedMessage = new InstructionMessage(null, "AA11", null, null, null);
 
         InstructionMessage actualMessage = testedObject.parseMessage(messageString);
 
@@ -53,8 +51,7 @@ public class InstructionMessageParserTest {
     @Test
     public void shouldSetQuantityWhenMessageIsValid() {
         String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
-        InstructionMessage expectedMessage = new InstructionMessage();
-        expectedMessage.setQuantity(1000);
+        InstructionMessage expectedMessage = new InstructionMessage(null, null, 1000, null, null);
 
         InstructionMessage actualMessage = testedObject.parseMessage(messageString);
 
@@ -64,8 +61,7 @@ public class InstructionMessageParserTest {
     @Test
     public void shouldSetUomWhenMessageIsValid() {
         String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
-        InstructionMessage expectedMessage = new InstructionMessage();
-        expectedMessage.setUom(10);
+        InstructionMessage expectedMessage = new InstructionMessage(null, null, null, 10, null);
 
         InstructionMessage actualMessage = testedObject.parseMessage(messageString);
 
@@ -75,8 +71,7 @@ public class InstructionMessageParserTest {
     @Test
     public void shouldSetTimestampWhenMessageIsValid() {
         String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
-        InstructionMessage expectedMessage = new InstructionMessage();
-        expectedMessage.setTimestamp(Instant.parse("2015-03-05T10:04:56.012Z"));
+        InstructionMessage expectedMessage = new InstructionMessage(null, null, null, null, Instant.parse("2015-03-05T10:04:56.012Z"));
 
         InstructionMessage actualMessage = testedObject.parseMessage(messageString);
 
