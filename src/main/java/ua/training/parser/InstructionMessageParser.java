@@ -11,12 +11,29 @@ public class InstructionMessageParser {
         if (message == null || message.isEmpty())
             throw new MessageParseException();
         String[] splits = message.split(" ");
+        return buildInstructionMessage(splits);
+    }
+
+    private InstructionMessage buildInstructionMessage(String[] messageSplits) {
         InstructionMessage instructionMessage = new InstructionMessage();
-        instructionMessage.setInstructionType(InstructionType.valueOf(splits[1]));
-        instructionMessage.setProductCode(splits[2]);
-        instructionMessage.setQuantity(Integer.valueOf(splits[3]));
-        instructionMessage.setUom(Integer.valueOf(splits[4]));
-        instructionMessage.setTimestamp(Instant.parse(splits[5]));
+        instructionMessage.setInstructionType(parseInstructionType(messageSplits[1]));
+        instructionMessage.setProductCode(messageSplits[2]);
+        instructionMessage.setQuantity(parseInteger(messageSplits[3]));
+        instructionMessage.setUom(parseInteger(messageSplits[4]));
+        instructionMessage.setTimestamp(parseTimestamp(messageSplits[5]));
         return instructionMessage;
     }
+
+    private InstructionType parseInstructionType(String instructionType) {
+        return InstructionType.valueOf(instructionType);
+    }
+
+    private Integer parseInteger(String integerToParse) {
+        return Integer.parseInt(integerToParse);
+    }
+
+    private Instant parseTimestamp(String timestamp) {
+        return Instant.parse(timestamp);
+    }
+
 }
