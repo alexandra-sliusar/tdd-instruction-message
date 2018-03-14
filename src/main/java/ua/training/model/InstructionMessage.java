@@ -3,10 +3,19 @@ package ua.training.model;
 import java.time.Instant;
 
 public class InstructionMessage {
+    private InstructionType instructionType;
     private String productCode;
     private Integer quantity;
     private Integer uom;
     private Instant timestamp;
+
+    public InstructionType getInstructionType() {
+        return instructionType;
+    }
+
+    public void setInstructionType(InstructionType instructionType) {
+        this.instructionType = instructionType;
+    }
 
     public String getProductCode() {
         return productCode;

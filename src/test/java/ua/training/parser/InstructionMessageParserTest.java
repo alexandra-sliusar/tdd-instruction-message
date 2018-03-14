@@ -3,6 +3,7 @@ package ua.training.parser;
 import org.junit.Test;
 import ua.training.exception.MessageParseException;
 import ua.training.model.InstructionMessage;
+import ua.training.model.InstructionType;
 
 import java.time.Instant;
 
@@ -25,6 +26,17 @@ public class InstructionMessageParserTest {
         String emptyString = "";
 
         testedObject.parseMessage(emptyString);
+    }
+
+    @Test
+    public void shouldSetInstructionTypeWhenMessageIsValid() {
+        String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
+        InstructionMessage expectedMessage = new InstructionMessage();
+        expectedMessage.setInstructionType(InstructionType.A);
+
+        InstructionMessage actualMessage = testedObject.parseMessage(messageString);
+
+        assertThat(actualMessage.getInstructionType(), equalTo(expectedMessage.getInstructionType()));
     }
 
     @Test
