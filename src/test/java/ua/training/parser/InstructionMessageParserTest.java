@@ -4,6 +4,8 @@ import org.junit.Test;
 import ua.training.exception.MessageParseException;
 import ua.training.model.InstructionMessage;
 
+import java.time.Instant;
+
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -56,5 +58,16 @@ public class InstructionMessageParserTest {
         InstructionMessage actualMessage = testedObject.parseMessage(messageString);
 
         assertThat(actualMessage.getUom(), equalTo(expectedMessage.getUom()));
+    }
+
+    @Test
+    public void shouldSetTimestampWhenMessageIsValid() {
+        String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
+        InstructionMessage expectedMessage = new InstructionMessage();
+        expectedMessage.setTimestamp(Instant.parse("2015-03-05T10:04:56.012Z"));
+
+        InstructionMessage actualMessage = testedObject.parseMessage(messageString);
+
+        assertThat(actualMessage.getTimestamp(), equalTo(expectedMessage.getTimestamp()));
     }
 }
