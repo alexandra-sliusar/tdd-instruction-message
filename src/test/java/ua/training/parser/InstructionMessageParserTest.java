@@ -46,4 +46,15 @@ public class InstructionMessageParserTest {
 
         assertThat(actualMessage.getQuantity(), equalTo(expectedMessage.getQuantity()));
     }
+
+    @Test
+    public void shouldSetUomWhenMessageIsValid() {
+        String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
+        InstructionMessage expectedMessage = new InstructionMessage();
+        expectedMessage.setUom(10);
+
+        InstructionMessage actualMessage = testedObject.parseMessage(messageString);
+
+        assertThat(actualMessage.getUom(), equalTo(expectedMessage.getUom()));
+    }
 }

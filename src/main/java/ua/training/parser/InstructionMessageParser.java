@@ -11,6 +11,7 @@ public class InstructionMessageParser {
         InstructionMessage instructionMessage = new InstructionMessage();
         instructionMessage.setProductCode(splits[2]);
         instructionMessage.setQuantity(Integer.valueOf(splits[3]));
+        instructionMessage.setUom(Integer.valueOf(splits[4]));
         return instructionMessage;
     }
 }
