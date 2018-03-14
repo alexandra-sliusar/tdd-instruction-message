@@ -2,6 +2,10 @@ package ua.training.parser;
 
 import org.junit.Test;
 import ua.training.exception.MessageParseException;
+import ua.training.model.InstructionMessage;
+
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class InstructionMessageParserTest {
 
@@ -19,5 +23,16 @@ public class InstructionMessageParserTest {
         String emptyString = "";
 
         testedObject.parseMessage(emptyString);
+    }
+
+    @Test
+    public void shouldSetProductCodeWhenMessageIsValid() {
+        String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
+        InstructionMessage expectedMessage = new InstructionMessage();
+        expectedMessage.setProductCode("AA11");
+
+        InstructionMessage actualMessage = testedObject.parseMessage(messageString);
+
+        assertThat(actualMessage.getProductCode(), equalTo(expectedMessage.getProductCode()));
     }
 }
