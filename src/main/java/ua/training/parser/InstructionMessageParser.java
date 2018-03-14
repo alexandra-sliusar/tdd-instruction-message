@@ -15,11 +15,17 @@ public class InstructionMessageParser {
     }
 
     private InstructionMessage buildInstructionMessage(String[] messageSplits) {
-        InstructionMessage instructionMessage = new InstructionMessage(
-                parseInstructionType(messageSplits[1]), messageSplits[2], parseInteger(messageSplits[3]),
-                parseInteger(messageSplits[4]), parseTimestamp(messageSplits[5]));
-
-        return instructionMessage;
+        return new InstructionMessage.Builder()
+                .setInstructionType(
+                        parseInstructionType(messageSplits[1]))
+                .setProductCode(messageSplits[2])
+                .setQuantity(
+                        parseInteger(messageSplits[3]))
+                .setUom(
+                        parseInteger(messageSplits[4]))
+                .setTimestamp(
+                        parseTimestamp(messageSplits[5]))
+                .build();
     }
 
     private InstructionType parseInstructionType(String instructionType) {

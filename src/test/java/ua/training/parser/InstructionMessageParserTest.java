@@ -1,5 +1,6 @@
 package ua.training.parser;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.training.exception.MessageParseException;
 import ua.training.model.InstructionMessage;
@@ -13,6 +14,35 @@ import static org.junit.Assert.assertThat;
 public class InstructionMessageParserTest {
 
     private InstructionMessageParser testedObject = new InstructionMessageParser();
+
+    private static InstructionMessage instructionMessage;
+    private static String instructionMessageString;
+
+    @BeforeClass
+    public static void setUpMessageAndMessageString() {
+        String delimiter = " ";
+        String type = "InstructionMessage";
+        InstructionType instructionType = InstructionType.A;
+        String productCode = "AA11";
+        Integer quantity = 1000;
+        Integer uom = 10;
+        Instant timestamp = Instant.parse("2015-03-05T10:04:56.012Z");
+
+        instructionMessageString = new StringBuilder(type).append(delimiter)
+                .append(instructionType).append(delimiter)
+                .append(productCode).append(delimiter)
+                .append(quantity).append(delimiter)
+                .append(uom).append(delimiter)
+                .append(timestamp)
+                .toString();
+        instructionMessage = new InstructionMessage.Builder()
+                .setInstructionType(instructionType)
+                .setProductCode(productCode)
+                .setQuantity(quantity)
+                .setUom(uom)
+                .setTimestamp(timestamp)
+                .build();
+    }
 
     @Test(expected = MessageParseException.class)
     public void shouldThrowExceptionWhenStringIsNull() {
@@ -30,51 +60,36 @@ public class InstructionMessageParserTest {
 
     @Test
     public void shouldSetInstructionTypeWhenMessageIsValid() {
-        String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
-        InstructionMessage expectedMessage = new InstructionMessage(InstructionType.A, null, null, null, null);
+        InstructionMessage actualMessage = testedObject.parseMessage(instructionMessageString);
 
-        InstructionMessage actualMessage = testedObject.parseMessage(messageString);
-
-        assertThat(actualMessage.getInstructionType(), equalTo(expectedMessage.getInstructionType()));
+        assertThat(actualMessage.getInstructionType(), equalTo(instructionMessage.getInstructionType()));
     }
 
     @Test
     public void shouldSetProductCodeWhenMessageIsValid() {
-        String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
-        InstructionMessage expectedMessage = new InstructionMessage(null, "AA11", null, null, null);
+        InstructionMessage actualMessage = testedObject.parseMessage(instructionMessageString);
 
-        InstructionMessage actualMessage = testedObject.parseMessage(messageString);
-
-        assertThat(actualMessage.getProductCode(), equalTo(expectedMessage.getProductCode()));
+        assertThat(actualMessage.getProductCode(), equalTo(instructionMessage.getProductCode()));
     }
 
     @Test
     public void shouldSetQuantityWhenMessageIsValid() {
-        String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
-        InstructionMessage expectedMessage = new InstructionMessage(null, null, 1000, null, null);
+        InstructionMessage actualMessage = testedObject.parseMessage(instructionMessageString);
 
-        InstructionMessage actualMessage = testedObject.parseMessage(messageString);
-
-        assertThat(actualMessage.getQuantity(), equalTo(expectedMessage.getQuantity()));
+        assertThat(actualMessage.getQuantity(), equalTo(instructionMessage.getQuantity()));
     }
 
     @Test
     public void shouldSetUomWhenMessageIsValid() {
-        String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
-        InstructionMessage expectedMessage = new InstructionMessage(null, null, null, 10, null);
+        InstructionMessage actualMessage = testedObject.parseMessage(instructionMessageString);
 
-        InstructionMessage actualMessage = testedObject.parseMessage(messageString);
-
-        assertThat(actualMessage.getUom(), equalTo(expectedMessage.getUom()));
+        assertThat(actualMessage.getUom(), equalTo(instructionMessage.getUom()));
     }
 
     @Test
     public void shouldSetTimestampWhenMessageIsValid() {
-        String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
-        InstructionMessage expectedMessage = new InstructionMessage(null, null, null, null, Instant.parse("2015-03-05T10:04:56.012Z"));
+        InstructionMessage actualMessage = testedObject.parseMessage(instructionMessageString);
 
-        InstructionMessage actualMessage = testedObject.parseMessage(messageString);
-
-        assertThat(actualMessage.getTimestamp(), equalTo(expectedMessage.getTimestamp()));
+        assertThat(actualMessage.getTimestamp(), equalTo(instructionMessage.getTimestamp()));
     }
 }

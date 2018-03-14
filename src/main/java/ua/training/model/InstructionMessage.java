@@ -9,13 +9,49 @@ public final class InstructionMessage {
     private final Integer uom;
     private final Instant timestamp;
 
-    public InstructionMessage(InstructionType instructionType, String productCode,
-                               Integer quantity, Integer uom, Instant timestamp) {
-        this.instructionType = instructionType;
-        this.productCode = productCode;
-        this.quantity = quantity;
-        this.uom = uom;
-        this.timestamp = timestamp;
+    private InstructionMessage(Builder builder) {
+        this.instructionType = builder.instructionType;
+        this.productCode = builder.productCode;
+        this.quantity = builder.quantity;
+        this.uom = builder.uom;
+        this.timestamp = builder.timestamp;
+    }
+
+    public static class Builder {
+        private InstructionType instructionType;
+        private String productCode;
+        private Integer quantity;
+        private Integer uom;
+        private Instant timestamp;
+
+        public Builder setInstructionType(InstructionType instructionType) {
+            this.instructionType = instructionType;
+            return this;
+        }
+
+        public Builder setProductCode(String productCode) {
+            this.productCode = productCode;
+            return this;
+        }
+
+        public Builder setQuantity(Integer quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+        public Builder setUom(Integer uom) {
+            this.uom = uom;
+            return this;
+        }
+
+        public Builder setTimestamp(Instant timestamp) {
+            this.timestamp = timestamp;
+            return this;
+        }
+
+        public InstructionMessage build() {
+            return new InstructionMessage(this);
+        }
     }
 
     public InstructionType getInstructionType() {
