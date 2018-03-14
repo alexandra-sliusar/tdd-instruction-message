@@ -35,4 +35,15 @@ public class InstructionMessageParserTest {
 
         assertThat(actualMessage.getProductCode(), equalTo(expectedMessage.getProductCode()));
     }
+
+    @Test
+    public void shouldSetQuantityWhenMessageIsValid() {
+        String messageString = "InstructionMessage A AA11 1000 10 2015-03-05T10:04:56.012Z";
+        InstructionMessage expectedMessage = new InstructionMessage();
+        expectedMessage.setQuantity(1000);
+
+        InstructionMessage actualMessage = testedObject.parseMessage(messageString);
+
+        assertThat(actualMessage.getQuantity(), equalTo(expectedMessage.getQuantity()));
+    }
 }

@@ -10,6 +10,7 @@ public class InstructionMessageParser {
         String[] splits = message.split(" ");
         InstructionMessage instructionMessage = new InstructionMessage();
         instructionMessage.setProductCode(splits[2]);
+        instructionMessage.setQuantity(Integer.valueOf(splits[3]));
         return instructionMessage;
     }
 }
