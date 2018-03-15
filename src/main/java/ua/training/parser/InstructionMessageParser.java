@@ -8,9 +8,20 @@ import ua.training.model.InstructionType;
 import java.time.Instant;
 
 public class InstructionMessageParser {
+
+    private static String DELIMITER = " ";
+    private static String ACCEPTED_MESSAGE_TYPE = "InstructionMessage";
+    private static Integer ACCEPTED_MESSAGE_SPLIT_LENGTH = 6;
+    private static Integer MESSAGE_TYPE_INDEX = 0;
+    private static Integer INSTRUCTION_TYPE_INDEX = 1;
+    private static Integer PRODUCT_CODE_INDEX = 2;
+    private static Integer QUANTITY_INDEX = 3;
+    private static Integer UOM_INDEX = 4;
+    private static Integer TIMESTAMP_INDEX = 5;
+
     public InstructionMessage parseMessage(String message) {
         checkMessageIsNotEmpty(message);
-        String[] messageSplits = message.split(" ");
+        String[] messageSplits = message.split(DELIMITER);
         checkMessageValidity(messageSplits);
         return buildInstructionMessage(messageSplits);
     }
@@ -23,21 +34,21 @@ public class InstructionMessageParser {
     }
 
     private void checkMessageValidity(String[] messageSplits) {
-        if (!messageSplits[0].equals("InstructionMessage") || messageSplits.length != 6)
+        if (!messageSplits[MESSAGE_TYPE_INDEX].equals(ACCEPTED_MESSAGE_TYPE) || messageSplits.length != ACCEPTED_MESSAGE_SPLIT_LENGTH)
             throw new MessageParseException();
     }
 
     private InstructionMessage buildInstructionMessage(String[] messageSplits) {
         return new InstructionMessage.Builder()
                 .setInstructionType(
-                        parseInstructionType(messageSplits[1]))
-                .setProductCode(messageSplits[2])
+                        parseInstructionType(messageSplits[INSTRUCTION_TYPE_INDEX]))
+                .setProductCode(messageSplits[PRODUCT_CODE_INDEX])
                 .setQuantity(
-                        parseInteger(messageSplits[3]))
+                        parseInteger(messageSplits[QUANTITY_INDEX]))
                 .setUom(
-                        parseInteger(messageSplits[4]))
+                        parseInteger(messageSplits[UOM_INDEX]))
                 .setTimestamp(
-                        parseTimestamp(messageSplits[5]))
+                        parseTimestamp(messageSplits[TIMESTAMP_INDEX]))
                 .build();
     }
 
