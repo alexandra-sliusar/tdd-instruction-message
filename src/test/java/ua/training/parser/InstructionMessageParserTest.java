@@ -92,4 +92,11 @@ public class InstructionMessageParserTest {
 
         assertThat(actualMessage.getTimestamp(), equalTo(instructionMessage.getTimestamp()));
     }
+
+    @Test(expected = MessageParseException.class)
+    public void shouldThrowExceptionWhenMessageTypeIsNotValid() {
+        String otherTypeString = "TestMessage A MZ89 5678 50 2015-03-05T10:04:56.012Z";
+
+        testedObject.parseMessage(otherTypeString);
+    }
 }

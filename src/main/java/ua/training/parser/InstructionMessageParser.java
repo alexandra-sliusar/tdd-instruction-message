@@ -11,6 +11,8 @@ public class InstructionMessageParser {
         if (message == null || message.isEmpty())
             throw new MessageParseException();
         String[] splits = message.split(" ");
+        if (!splits[0].equals("InstructionMessage"))
+            throw new MessageParseException();
         return buildInstructionMessage(splits);
     }
 
