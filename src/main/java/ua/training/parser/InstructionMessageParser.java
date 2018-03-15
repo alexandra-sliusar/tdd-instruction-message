@@ -1,5 +1,6 @@
 package ua.training.parser;
 
+import org.apache.commons.lang.StringUtils;
 import ua.training.exception.MessageParseException;
 import ua.training.model.InstructionMessage;
 import ua.training.model.InstructionType;
@@ -8,12 +9,22 @@ import java.time.Instant;
 
 public class InstructionMessageParser {
     public InstructionMessage parseMessage(String message) {
-        if (message == null || message.isEmpty())
+        checkMessageIsNotEmpty(message);
+        String[] messageSplits = message.split(" ");
+        checkMessageValidity(messageSplits);
+        return buildInstructionMessage(messageSplits);
+    }
+
+    private void checkMessageIsNotEmpty(String message) {
+        boolean isMessageEmpty = StringUtils.isEmpty(message);
+        if (isMessageEmpty) {
             throw new MessageParseException();
-        String[] splits = message.split(" ");
-        if (!splits[0].equals("InstructionMessage") || splits.length != 6)
+        }
+    }
+
+    private void checkMessageValidity(String[] messageSplits) {
+        if (!messageSplits[0].equals("InstructionMessage") || messageSplits.length != 6)
             throw new MessageParseException();
-        return buildInstructionMessage(splits);
     }
 
     private InstructionMessage buildInstructionMessage(String[] messageSplits) {
