@@ -42,7 +42,11 @@ public class InstructionMessageParser {
     }
 
     private InstructionType parseInstructionType(String instructionType) {
-        return InstructionType.valueOf(instructionType);
+        try {
+            return InstructionType.valueOf(instructionType);
+        } catch (IllegalArgumentException e) {
+            throw new MessageParseException();
+        }
     }
 
     private Integer parseInteger(String integerToParse) {

@@ -99,11 +99,19 @@ public class InstructionMessageParserTest {
 
         testedObject.parseMessage(otherTypeString);
     }
+
     @Test(expected = MessageParseException.class)
     public void shouldThrowExceptionWhenMessageSizeIsNotValid() {
         String otherSizeString = "InstructionMessage A MZ89 5678 50 2015-03-05T10:04:56.012Z additional";
 
         testedObject.parseMessage(otherSizeString);
+    }
+
+    @Test(expected = MessageParseException.class)
+    public void shouldThrowExceptionWhenInstructionTypeCannotBeParsed() {
+        String stringWithInvalidInstructionType = "InstructionMessage Z MZ89 5678 50 2015-03-05T10:04:56.012Z";
+
+        testedObject.parseMessage(stringWithInvalidInstructionType);
     }
 
 }
