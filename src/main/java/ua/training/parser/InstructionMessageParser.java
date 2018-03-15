@@ -50,7 +50,11 @@ public class InstructionMessageParser {
     }
 
     private Integer parseInteger(String integerToParse) {
-        return Integer.parseInt(integerToParse);
+        try {
+            return Integer.parseInt(integerToParse);
+        } catch (NumberFormatException e) {
+            throw new MessageParseException();
+        }
     }
 
     private Instant parseTimestamp(String timestamp) {

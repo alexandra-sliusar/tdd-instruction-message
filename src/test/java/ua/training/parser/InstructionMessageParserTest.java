@@ -114,4 +114,17 @@ public class InstructionMessageParserTest {
         testedObject.parseMessage(stringWithInvalidInstructionType);
     }
 
+    @Test(expected = MessageParseException.class)
+    public void shouldThrowExceptionWhenQuantityCannotBeParsed() {
+        String stringWithInvalidQuantity = "InstructionMessage A MZ89 quantity 50 2015-03-05T10:04:56.012Z";
+
+        testedObject.parseMessage(stringWithInvalidQuantity);
+    }
+    @Test
+    public void shouldThrowExceptionWhenUomCannotBeParsed() {
+        String stringWithInvalidUom = "InstructionMessage A MZ89 5678 uom 2015-03-05T10:04:56.012Z";
+
+        testedObject.parseMessage(stringWithInvalidUom);
+    }
+
 }
